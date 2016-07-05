@@ -28,6 +28,7 @@ public class Vorstellung
 
     /**
      * Erstellt eine neue Vorstellung.
+     * TODO Geldbetrag
      * 
      * @param kinosaal der Kinosaal, in dem die Vorstellung laeuft.
      * @param film der Film, der in dieser Vorstellung gezeigt wird.
@@ -124,7 +125,7 @@ public class Vorstellung
     /**
      * Gibt den Verkaufspreis in Eurocent für Karten zu dieser Vorstellung
      * zurück.
-     * 
+     * TODO Geldbetrag
      */
     public int getPreis()
     {
@@ -180,7 +181,8 @@ public class Vorstellung
 
     /**
      * Gibt den Gesamtpreis für die angegebenen Plätze zurücke
-     * 
+     * TODO Geldbetrag
+     *
      * @param plaetze die Sitzplätze.
      * 
      * @return Gesamtpreis in Eurocent

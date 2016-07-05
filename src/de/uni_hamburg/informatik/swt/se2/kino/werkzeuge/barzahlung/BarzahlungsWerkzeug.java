@@ -243,6 +243,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 
     /**
      * Setzt eine übergebene Differenz im Restbetrag-Textfeld
+     * TODO Geldbetrag
      * 
      * @param differenz ein eingegebener Betrag
      */
@@ -253,6 +254,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 
     /**
      * Setzt den Preis in der UI.
+     * TODO Geldbetrag
      */
     private void zeigePreis()
     {

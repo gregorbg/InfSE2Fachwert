@@ -119,6 +119,7 @@ public class PlatzVerkaufsWerkzeug
 
     /**
      * Aktualisiert den anzuzeigenden Gesamtpreis
+     * TODO Geldbetrag
      */
     private void aktualisierePreisanzeige(Set<Platz> plaetze)
     {
