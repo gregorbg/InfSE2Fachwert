@@ -3,6 +3,7 @@ package de.uni_hamburg.informatik.swt.se2.kino.materialien;
 import java.util.Set;
 
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Datum;
+import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Geldbetrag;
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Platz;
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Uhrzeit;
 
@@ -189,11 +190,11 @@ public class Vorstellung
      * 
      * @require hatPlaetze(plaetze)
      */
-    public int getPreisFuerPlaetze(Set<Platz> plaetze)
+    public Geldbetrag getPreisFuerPlaetze(Set<Platz> plaetze)
     {
         assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 
-        return _preis * plaetze.size();
+        return Geldbetrag.fromInt(_preis * plaetze.size());
     }
 
     /**

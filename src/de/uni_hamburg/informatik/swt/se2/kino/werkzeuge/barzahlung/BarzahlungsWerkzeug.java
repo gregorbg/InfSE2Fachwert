@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Geldbetrag;
 import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.ObservableSubwerkzeug;
 
 /**
@@ -34,7 +35,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 {
 
     private BarzahlungsWerkzeugUI _ui;
-    private int _preis;
+    private Geldbetrag _preis;
     private boolean _barzahlungErfolgreich;
     private boolean _ausreichenderGeldbetrag;
 
@@ -53,11 +54,11 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      * Startet den Barzahlungsvorgang. Die UI wird angezeigt. Der Programmfluss
      * kehrt erst nach dem Beenden des Bezahlvorgangs an den Aufrufer zurück.
      * 
-     * @param preis der einzunehmende Gelbetrag
+     * @param _ausgewaehlterGesamtbetrag der einzunehmende Gelbetrag
      */
-    public void fuehreBarzahlungDurch(int preis)
+    public void fuehreBarzahlungDurch(Geldbetrag _ausgewaehlterGesamtbetrag)
     {
-        _preis = preis;
+        _preis = _ausgewaehlterGesamtbetrag;
         _ausreichenderGeldbetrag = false;
         _barzahlungErfolgreich = false;
         setzeUIAnfangsstatus();
@@ -168,9 +169,9 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
         }
         try
         {
-            int eingabeBetrag = Integer.parseInt(eingabePreis);
-            _ausreichenderGeldbetrag = (eingabeBetrag >= _preis);
-            int differenz = Math.abs(eingabeBetrag - _preis);
+            Geldbetrag eingabeBetrag = Geldbetrag.fromString(eingabePreis);
+            //_ausreichenderGeldbetrag = (eingabeBetrag >= _preis);
+            Geldbetrag differenz = eingabeBetrag.sub(_preis);
             zeigeRestbetrag(differenz);
         }
         catch (NumberFormatException ignore)
@@ -247,9 +248,9 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      * 
      * @param differenz ein eingegebener Betrag
      */
-    private void zeigeRestbetrag(int differenz)
+    private void zeigeRestbetrag(Geldbetrag differenz)
     {
-        _ui.getRestbetragTextfield().setText(differenz + " Eurocent");
+        _ui.getRestbetragTextfield().setText(differenz.getFormatiertenString());
     }
 
     /**
@@ -258,6 +259,6 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void zeigePreis()
     {
-        _ui.getPreisTextfield().setText(_preis + " Eurocent");
+        _ui.getPreisTextfield().setText(_preis.getFormatiertenString());
     }
 }
