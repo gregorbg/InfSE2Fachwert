@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Geldbetrag;
 import de.uni_hamburg.informatik.swt.se2.kino.werkzeuge.ObservableSubwerkzeug;
 
 /**
@@ -34,7 +35,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 {
 
     private BarzahlungsWerkzeugUI _ui;
-    private int _preis;
+    private Geldbetrag _preis;
     private boolean _barzahlungErfolgreich;
     private boolean _ausreichenderGeldbetrag;
 
@@ -55,7 +56,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      * 
      * @param preis der einzunehmende Gelbetrag
      */
-    public void fuehreBarzahlungDurch(int preis)
+    public void fuehreBarzahlungDurch(Geldbetrag preis)
     {
         _preis = preis;
         _ausreichenderGeldbetrag = false;
@@ -168,9 +169,9 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
         }
         try
         {
-            int eingabeBetrag = Integer.parseInt(eingabePreis);
-            _ausreichenderGeldbetrag = (eingabeBetrag >= _preis);
-            int differenz = Math.abs(eingabeBetrag - _preis);
+            Geldbetrag eingabeBetrag = Geldbetrag.fromString(eingabePreis);
+            _ausreichenderGeldbetrag = (eingabeBetrag.getBetrag() >= _preis.getBetrag());
+            Geldbetrag differenz = eingabeBetrag.sub(_preis);
             zeigeRestbetrag(differenz);
         }
         catch (NumberFormatException ignore)
@@ -232,9 +233,6 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 
     /**
      * Setzt die Fehlerstatusanzeige der Gegeben- und Rückgabe-Textfelder.
-     * 
-     * @param fehler true, wenn die Felder als fehlerhaft markiert werden
-     *            sollen, sonst false.
      */
     private void zeigeFehlertext()
     {
@@ -243,21 +241,19 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
 
     /**
      * Setzt eine übergebene Differenz im Restbetrag-Textfeld
-     * TODO Geldbetrag
-     * 
+     *
      * @param differenz ein eingegebener Betrag
      */
-    private void zeigeRestbetrag(int differenz)
+    private void zeigeRestbetrag(Geldbetrag differenz)
     {
-        _ui.getRestbetragTextfield().setText(differenz + " Eurocent");
+        _ui.getRestbetragTextfield().setText(differenz.getFormatiertenString());
     }
 
     /**
      * Setzt den Preis in der UI.
-     * TODO Geldbetrag
      */
     private void zeigePreis()
     {
-        _ui.getPreisTextfield().setText(_preis + " Eurocent");
+        _ui.getPreisTextfield().setText(_preis.getFormatiertenString());
     }
 }

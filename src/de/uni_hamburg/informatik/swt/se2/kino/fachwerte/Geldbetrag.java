@@ -49,6 +49,10 @@ public final class Geldbetrag
         return currencyFormat.format(_betrag / 100f);
     }
 
+    public int getBetrag() {
+        return _betrag;
+    }
+
     public Geldbetrag add(Geldbetrag other)
     {
         return new Geldbetrag(_betrag + other._betrag);
@@ -56,7 +60,7 @@ public final class Geldbetrag
 
     public Geldbetrag sub(Geldbetrag other)
     {
-        return new Geldbetrag(_betrag - other._betrag);
+        return new Geldbetrag(Math.abs(_betrag - other._betrag));
     }
 
     public Geldbetrag scale(int scalar)

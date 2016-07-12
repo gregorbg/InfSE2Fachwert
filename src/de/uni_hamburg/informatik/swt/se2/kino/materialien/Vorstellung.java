@@ -3,6 +3,7 @@ package de.uni_hamburg.informatik.swt.se2.kino.materialien;
 import java.util.Set;
 
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Datum;
+import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Geldbetrag;
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Platz;
 import de.uni_hamburg.informatik.swt.se2.kino.fachwerte.Uhrzeit;
 
@@ -22,14 +23,13 @@ public class Vorstellung
     private Uhrzeit _anfangszeit;
     private Uhrzeit _endzeit;
     private Datum _datum;
-    private int _preis;
+    private Geldbetrag _preis;
     private boolean[][] _verkauft;
     private int _anzahlVerkauftePlaetze;
 
     /**
      * Erstellt eine neue Vorstellung.
-     * TODO Geldbetrag
-     * 
+     *
      * @param kinosaal der Kinosaal, in dem die Vorstellung laeuft.
      * @param film der Film, der in dieser Vorstellung gezeigt wird.
      * @param anfangszeit die Anfangszeit der Vorstellung.
@@ -66,7 +66,7 @@ public class Vorstellung
         _anfangszeit = anfangszeit;
         _endzeit = endzeit;
         _datum = datum;
-        _preis = preis;
+        _preis = Geldbetrag.fromInt(preis);
         _verkauft = new boolean[kinosaal.getAnzahlReihen()][kinosaal
                 .getAnzahlSitzeProReihe()];
         _anzahlVerkauftePlaetze = 0;
@@ -125,9 +125,8 @@ public class Vorstellung
     /**
      * Gibt den Verkaufspreis in Eurocent für Karten zu dieser Vorstellung
      * zurück.
-     * TODO Geldbetrag
      */
-    public int getPreis()
+    public Geldbetrag getPreis()
     {
         return _preis;
     }
@@ -181,7 +180,6 @@ public class Vorstellung
 
     /**
      * Gibt den Gesamtpreis für die angegebenen Plätze zurücke
-     * TODO Geldbetrag
      *
      * @param plaetze die Sitzplätze.
      * 
@@ -189,11 +187,11 @@ public class Vorstellung
      * 
      * @require hatPlaetze(plaetze)
      */
-    public int getPreisFuerPlaetze(Set<Platz> plaetze)
+    public Geldbetrag getPreisFuerPlaetze(Set<Platz> plaetze)
     {
         assert hatPlaetze(plaetze) : "Vorbedingung verletzt: hatPlaetze(plaetze)";
 
-        return _preis * plaetze.size();
+        return _preis.scale(plaetze.size());
     }
 
     /**

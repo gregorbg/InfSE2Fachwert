@@ -65,7 +65,7 @@ public class KinoTest
         _u3 = Uhrzeit.get(22, 30);
         _u4 = Uhrzeit.get(1, 30);
 
-        _d1 = Datum.get(11, 07, 2008);
+        _d1 = Datum.get(11, 7, 2008);
 
         _vorstellungSaal1Film0 = new Vorstellung(_saal1, _film0, _u1, _u2, _d1,
                 900);
