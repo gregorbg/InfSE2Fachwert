@@ -137,17 +137,20 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
             {
                 switch (e.getKeyCode())
                 {
-                case KeyEvent.VK_ESCAPE:
-                    bezahlenNichtErfolgreich();
-                    break;
-                case KeyEvent.VK_ENTER:
-                    if (_ausreichenderGeldbetrag)
-                    {
-                        bezahlenErfolgreich();
-                    }
-                    break;
-                default:
-                    reagiereAufEingabeText(_ui.getGezahltTextfield().getText());
+                    case KeyEvent.VK_ESCAPE:
+                        bezahlenNichtErfolgreich();
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        if (_ausreichenderGeldbetrag)
+                        {
+                            bezahlenErfolgreich();
+                        }
+                        break;
+                    case KeyEvent.VK_LEFT:
+                    case KeyEvent.VK_RIGHT:
+                        break;
+                    default:
+                        reagiereAufEingabeText(_ui.getGezahltTextfield().getText(), e.getKeyCode() != KeyEvent.VK_BACK_SPACE);
                 }
             }
         });
@@ -161,7 +164,7 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      * 
      * @param eingabePreis der bisher eingegebene Preis
      */
-    private void reagiereAufEingabeText(String eingabePreis)
+    private void reagiereAufEingabeText(String eingabePreis, boolean resetCursor)
     {
         if (eingabePreis.isEmpty())
         {
@@ -170,9 +173,16 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
         try
         {
             Geldbetrag eingabeBetrag = Geldbetrag.fromString(eingabePreis);
+            String geldbetragString = eingabeBetrag.getFormatiertenString();
+            int oldCaret = _ui.getGezahltTextfield().getCaretPosition();
+            _ui.getGezahltTextfield().setText(geldbetragString);
+
+            _ui.getGezahltTextfield().setCaretPosition(resetCursor
+                    ? geldbetragString.length() - 2
+                    : oldCaret + (eingabeBetrag.getBetrag() < 100 ? 1 : 0));
+
             _ausreichenderGeldbetrag = (eingabeBetrag.getBetrag() >= _preis.getBetrag());
-            Geldbetrag differenz = eingabeBetrag.sub(_preis);
-            zeigeRestbetrag(differenz);
+            zeigeRestbetrag(eingabeBetrag.sub(_preis));
         }
         catch (NumberFormatException ignore)
         {
@@ -216,7 +226,9 @@ public class BarzahlungsWerkzeug extends ObservableSubwerkzeug
      */
     private void loescheGezahltenBetrag()
     {
-        _ui.getGezahltTextfield().setText("");
+        _ui.getGezahltTextfield().setText(Geldbetrag.fromInt(0).getFormatiertenString());
+        _ui.getGezahltTextfield().setCaretPosition(4);
+        _ui.getGezahltTextfield().requestFocus();
     }
 
     /**
