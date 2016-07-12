@@ -10,7 +10,7 @@ public final class Geldbetrag
 
     public static Geldbetrag fromInt(int betrag)
     {
-        assert betrag >= 0 : "Nö";
+        assert betrag >= 0 : "N�";
 
         return new Geldbetrag(betrag);
     }
@@ -42,6 +42,8 @@ public final class Geldbetrag
     private Geldbetrag(int betrag)
     {
         _betrag = betrag;
+    }
+        return _betrag;
     }
 
     public String getFormatiertenString()
