@@ -10,7 +10,7 @@ public final class Geldbetrag
 
     public static Geldbetrag fromInt(int betrag)
     {
-        assert betrag >= 0 : "Nï¿½";
+        assert betrag >= 0 : "Nö";
 
         return new Geldbetrag(betrag);
     }
@@ -43,6 +43,9 @@ public final class Geldbetrag
     {
         _betrag = betrag;
     }
+    
+    public int toInt()
+    {
         return _betrag;
     }
 
